@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<licenses format="1.0" product="smartERP" release="4.0.12">
+    <license 
+		component="framework" 
+		expiration="2011-12-31" 
+		licensee="XXX医院" 
+		hardid="unlimited"
+		signature="" />
+
+   <license 
+		component="sysmanager" 
+		expiration="2011-12-31" 
+		licensee="XXX医院" 
+		hardid="unlimited"
+		signature="" />
+		
+   <license 
+		component="wf" 
+		expiration="2011-12-31" 
+		licensee="XXX医院" 
+		hardid="unlimited"
+		signature="" />
+
+   <license 
+		component="acct" 
+		expiration="2011-12-31" 
+		licensee="XXX医院" 
+		hardid="unlimited"
+		signature="" />
+		
+   <license 
+		component="demo" 
+		expiration="2011-12-31" 
+		licensee="XXX医院" 
+		hardid="unlimited"
+		signature="" />
+		
+</licenses>
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<app-component-list>
+	<app-component>
+		<name>framework</name>
+		<description>框架组件</description>
+	</app-component>
+
+	<app-component>
+		<name>sysmanager</name>
+		<description>系统管理</description>
+	</app-component>
+	
+	<app-component>
+		<name>wf</name>
+		<description>工作流工程</description>
+	</app-component>
+	
+	<app-component>
+		<name>acct</name>
+		<description>会计核算</description>
+	</app-component>
+	
+	<app-component>
+		<name>demo</name>
+		<description>系统演示</description>
+	</app-component>
+</app-component-list>

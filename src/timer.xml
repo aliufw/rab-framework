@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<timer-register>
+	<!--定时任务监听设置-->
+    <timer periods="3" class-name="com.cssnet.platform.baseframe.comm.scheduler.scheduletask.ScanDBCycTimerListener"/>
+	<!-- Session 超时管理 -->
+	<!-- 管理方法: 每日凌晨自动清除全部存在的缓存信息 -->
+	<timer id= "cacheSessionTimeoutListener" model="* * * 23 59" holiday="test-holiday" class-name="com.cssnet.platform.baseframe.comm.cachesession.CacheSessionTimeoutListener"/>
+
+    <holiday id="test-holiday" description="测试">
+        <!-- 每年的 5.1-5.7 为假期 -->
+		<date from="* 5 1" to="* 5 7"/>
+		<!-- 每年的 10.1-10.7 为假期 -->
+		<date from="* 10 1" to="* 10 7"/>
+		<!-- 每年的 1.1 为假期 -->
+		<date singleday="* 1 1"/>
+		<week from="3" to="4"/> 
+		<!-- 周六, 周日为假期 -->
+		<week singleday="1"/> 
+		<week singleday="7"/> 
+		
+		<!-- 在上述指定的假期中,如下日期为工作日 -->
+		<work singleday="2006 4 29"/>
+     
+    </holiday>
+
+</timer-register>

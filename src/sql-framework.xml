@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlfile>
+    <sql name="framework_getdbtime">SELECT SYSDATE FROM DUAL </sql>
+
+</sqlfile>

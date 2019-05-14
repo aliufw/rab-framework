@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<licenses format="1.0" product="smartERP" release="4.0.12">
+<license component="framework" expiration="2011-12-31" hardid="unlimited" licensee="XXX医院" signature="TtZ/dC/8sQwFCq3J0J6SaV4iPkbUBwJflhDdqav0uBiatzqBxm9u0NJq1O1mBW5cKI86BxKtC9Sn&#10;u4ScUJIV8Udb33OA4gIegu1FgBxLQQSKvzE6Kr8ECsTP+k656PeyPpFQe2yv1xnFVn1AWtcOyVKf&#10;6ipvvKSBd2KK6oNRdDs="/>
+<license component="acct" expiration="2011-12-31" hardid="unlimited" licensee="XXX医院" signature="EI8hI/pY5Uh9Sr/qH0nkUh8LVhrZppnFEZbJIv0mQyWGCVEKOF2y7u1eUCzo3AI3IjnhojPnd+ti&#10;gyEtON/KlVwpz6peOEzCOWwXBlhlpV0Aodq/aBLeV0xKWiQjX/VMOxzkmpchcV1Sduuqo21YUlsv&#10;R8eqE+z793gCZT2N4ms="/>
+<license component="wf" expiration="2011-12-31" hardid="unlimited" licensee="XXX医院" signature="RJpOKMyzQnzZTdz79oPW/RMrQ8029NG0hWQSIh6vyPxZYocztM3OgU7V0i0DfV81RN8mEQoW+wCH&#10;tN/IZwPU2JKFIbMiZmpB/tXpVpQc8EW6AZkazKq8l2905Uce+5S7jnklLfy0y324uBgbq9gtMVSZ&#10;KtsAwaZxZsPOuTMZ19A="/>
+<license component="sysmanager" expiration="2011-12-31" hardid="unlimited" licensee="XXX医院" signature="GtDwUDZrBuXCpaevahOlywoUtl+HDJ6ctdWFuM7a2eJS60u+tnN5qGg9Oh17FeRJPgKvv1TwZSty&#10;rK7UR/OUOTafQbVxHqvIBVrU88kS8Bf7TjA0Yx4C2cvdODMQmS0pJY+sPGcJvgdINKXHzaRUTPoc&#10;p6xkDP+V2mw5R5oMbeg="/>
+<license component="demo" expiration="2011-12-31" hardid="unlimited" licensee="XXX医院" signature="aUwR+UncvnoGBPi9B3AUVdLkHvwIAcNlqI1m3/aZS4eA03NmyhQ2EKaaXFKXTOc1KeDX63dXpg4M&#10;qXw8RlyczUR57B5lGr3GOBg4Enngu5mQTMsLxCOogUbuNRRi83x5FA3Baw5OIRhHgnqRpyqzlmNo&#10;XkpbotQtRhydIydK8Lo="/>
+</licenses>

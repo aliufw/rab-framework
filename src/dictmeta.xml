@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dmbs>
+	<table>
+		<table-name>t_dbm_tmp</table-name>
+		<table-description>示例代码表</table-description>
+		<fields>
+			<field column-name="id" display-name="编号" data-type="string" data-length="10" is-null="N" is-pk="Y"/>
+			<field column-name="name" display-name="名称" data-type="string" data-length="40" is-null="N" is-pk="N"/>
+			<field column-name="shortname" display-name="简称" data-type="string" data-length="20" is-null="N" is-pk="N"/>
+			<field column-name="address" display-name="地址" data-type="string" data-length="100" is-null="N" is-pk="N"/>
+			<field column-name="tel" display-name="电话" data-type="string" data-length="20" is-null="N" is-pk="N"/>
+		</fields>
+	</table>
+	<table>
+		<table-name>t_dbm_tmp2</table-name>
+		<table-description>示例代码表2</table-description>
+		<fields>
+			<field column-name="id" display-name="编号" data-type="string" data-length="10" is-null="N" is-pk="Y"/>
+			<field column-name="name" display-name="名称" data-type="string" data-length="40" is-null="N" is-pk="N"/>
+			<field column-name="shengri" display-name="生日" data-type="date" data-length="" is-null="N" is-pk="N"/>
+			<field column-name="niangling" display-name="年龄" data-type="number" data-length="" is-null="N" is-pk="N"/>
+			<field column-name="shouru" display-name="收入" data-type="float" data-length="20" is-null="N" is-pk="N"/>
+		</fields>
+	</table>
+	
+	<table>
+		<table-name>t_sys_money_resource</table-name>
+		<table-description>资金来源字典</table-description>
+		<fields>
+			<field column-name="fund_source_code" display-name="资金来源编码" data-type="number" data-length="3" is-null="N" is-pk="Y" />
+			<field column-name="fund_source_name" display-name="资金来源名称" data-type="string" data-length="20" is-null="N" is-pk="N" />
+			<field column-name="spell" display-name="拼音码" data-type="string"  data-length="8" is-null="Y" is-pk="N" />
+			<field column-name="define" display-name="自定义码" data-type="string" data-length="8" is-null="Y" is-pk="N" />
+			<field column-name="is_stop" display-name="是否停用" data-type="number" data-length="1" is-null="Y" is-pk="N" />
+		</fields>
+		
+	</table>
+	
+	<table>
+		<table-name>t_sys_emp_duty</table-name>
+		<table-description>职位信息</table-description>
+		<fields>
+			<field column-name="duty_code" display-name="职位编码" data-type="string" data-length="20" is-null="N" is-pk="Y" />
+			<field column-name="duty_name" display-name="职位名称" data-type="string" data-length="20" is-null="N" is-pk="N" />
+			<field column-name="duty_desc" display-name="职位描述" data-type="string"  data-length="40" is-null="Y" is-pk="N" />
+			<field column-name="duty_level" display-name="职位级次" data-type="number" data-length="2" is-null="N" is-pk="N" />
+			<field column-name="spell" display-name="拼音码" data-type="string" data-length="8" is-null="N" is-pk="N" />
+			<field column-name="is_last" display-name="末级标志" data-type="number" data-length="1" is-null="N" is-pk="N" />
+			<field column-name="is_stop" display-name="启用标志" data-type="number" data-length="1" is-null="N" is-pk="N" />
+			
+		</fields>
+		
+	</table>
+</dmbs>
+
+<!--
+
+create table t_dbm_tmp(
+	id	varchar(10) not null ,
+	name	varchar(40) not null,
+	shortname	varchar(20) not null,
+	address	varchar(100),
+	tel		varchar(20)
+)	
+
+drop table t_dbm_tmp2;
+create table t_dbm_tmp2(
+	id	varchar(10) not null ,
+	name	varchar(40) not null,
+	shengri	date not null,
+	niangling integer(8),
+	shouru	  double(8,2)
+)	
+
+
+-->

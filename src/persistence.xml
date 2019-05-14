@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-configuration>
+
+	<session-factory name="persistence.ds002"> 
+	  <session-factory-config> 
+	       <property name="show_sql">true</property>  
+	       <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property> 
+	       <property name="connection.url">jdbc:oracle:thin:@192.168.1.8:1521:orcl</property> 
+	       <property name="connection.username">platform</property> 
+	       <property name="connection.password">platform</property>
+	       <property name="dialect">org.hibernate.dialect.Oracle9Dialect</property> 
+      </session-factory-config> 
+   </session-factory> 
+
+	<session-factory name="sys-without-tx"> 
+	  <session-factory-config> 
+	       <property name="show_sql">true</property>  
+	       <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property> 
+	       <property name="connection.url">jdbc:oracle:thin:@192.168.1.8:1521:orcl</property> 
+	       <property name="connection.username">platform</property> 
+	       <property name="connection.password">platform</property>
+	       <property name="dialect">org.hibernate.dialect.Oracle9Dialect</property> 
+      </session-factory-config> 
+   </session-factory> 
+   <!--
+	<session-factory name="persistence.ds002"> 
+	  <session-factory-config> 
+			<property name="show_sql">true</property>  
+	       <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property> 
+	       <property name="connection.url">jdbc:oracle:thin:@192.168.1.8:1521:orcl</property> 
+	       <property name="connection.username">platform</property> 
+	       <property name="connection.password">platform</property> 
+	       <property name="dialect">org.hibernate.dialect.Oracle10gDialect</property> 
+      </session-factory-config> 
+   </session-factory> 
+-->
+<!--
+	<session-factory name="persistence.ds002">
+		<session-factory-config> 
+			<property name="hibernate.jndi.class">weblogic.jndi.WLInitialContextFactory</property>
+			<property name="hibernate.jndi.url">t3://127.0.0.1:7001</property> 
+			<property name="connection.datasource">orclds</property> 
+			<property name="dialect">org.hibernate.dialect.Oracle9Dialect</property>		
+			<property name="show_sql">true</property>
+			<property name="jdbc.fetch_size">50</property>
+			<property name="jdbc.batch_size">25</property>
+		</session-factory-config> 
+	</session-factory>
+-->
+<!--
+	<session-factory name="persistence.ds002"> 
+	  <session-factory-config> 
+	       <property name="connection.driver_class">org.gjt.mm.mysql.Driver</property> 
+	       <property name="connection.url">jdbc:mysql://localhost/test</property> 
+	       <property name="connection.username">root</property> 
+	       <property name="connection.password"></property> 
+		   <property name="show_sql">true</property>  
+      </session-factory-config> 
+   </session-factory>  
+-->
+
+	<!--session-factory name="persistence.ds002"> 
+	  <session-factory-config> 
+	       <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+		   <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+		   <property name="hibernate.connection.driver_class">net.sourceforge.jtds.jdbc.Driver</property>
+		   <property name="hibernate.connection.url">jdbc:jtds:sqlserver://192.168.1.194:1433/acct</property>
+		   <property name="hibernate.connection.username">sa</property>
+		   <property name="hibernate.connection.password">sa</property>
+		   <property name="show_sql">true</property>
+      </session-factory-config> 
+   </session-factory>  
+
+	<session-factory name="sys-without-tx"> 
+	  <session-factory-config> 
+	       <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+		   <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+		   <property name="hibernate.connection.driver_class">net.sourceforge.jtds.jdbc.Driver</property>
+		   <property name="hibernate.connection.url">jdbc:jtds:sqlserver://192.168.1.194:1433/acct</property>
+		   <property name="hibernate.connection.username">sa</property>
+		   <property name="hibernate.connection.password">sa</property>
+		   <property name="show_sql">true</property>
+      </session-factory-config> 
+   </session-factory--> 
+
+<!--<session-factory name="persistence.ds002"> 
+	  <session-factory-config> 
+	       <property name="connection.driver_class">org.gjt.mm.mysql.Driver</property> 
+	       <property name="connection.url">jdbc:mysql://localhost/test</property> 
+	       <property name="connection.username">root</property> 
+	       <property name="connection.password">manan</property> 
+		   <property name="show_sql">true</property>  
+
+      </session-factory-config> 
+   </session-factory>-->
+-->
+</hibernate-configuration>

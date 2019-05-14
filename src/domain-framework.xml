@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bizLogicHandler-config>
+	<default-dataSource-name>persistence.ds002</default-dataSource-name>
+	<bizLogicHandler>
+		<bizLogicHandler-name>usecase01</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.test.UseCase01</bizLogicHandler-class>
+		<dataSource-name>
+			<dataSources>vhds02</dataSources>
+		</dataSource-name>
+	</bizLogicHandler>	
+
+	<bizLogicHandler>
+		<bizLogicHandler-name>CacheUpdateManagerBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.framework.component.dictcache.CacheUpdateManagerBLH</bizLogicHandler-class>
+	</bizLogicHandler>	
+	
+	<bizLogicHandler>
+		<bizLogicHandler-name>DictCacheManagerBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.framework.component.dictcache.manager.blh.DictCacheManagerBLH</bizLogicHandler-class>
+	</bizLogicHandler>	
+	
+	<bizLogicHandler>
+		<bizLogicHandler-name>SecurityManagerBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.framework.comm.security.SecurityManagerBLH</bizLogicHandler-class>
+	</bizLogicHandler>	
+	
+	<bizLogicHandler>
+		<bizLogicHandler-name>LoginBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.security.login.blh.LoginBLH</bizLogicHandler-class>
+	</bizLogicHandler>
+
+</bizLogicHandler-config>

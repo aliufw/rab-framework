@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.6.2
+Created-By: 1.4.2_15-b02 (Sun Microsystems Inc.)
+Platform-Core-Version: 3.5.0
+Build-Date: August 7 2009
+Build-Time: 0924
+

@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlfile>
+	<!-- 系统编码规则管理模块 -->
+   	<sql name="SY001xtbmBLH_checkSysDept" desc ="检查部门表有没有相关数据" ><![CDATA[
+		SELECT count(1) FROM t_sys_dept WHERE comp_id=? AND dept_code<>'999999' AND dept_code<>'AAAAAAAAAA' AND dept_code<>'UNCOUNT'
+	]]></sql>
+	<sql name="SY001xtbmBLH_checkSysVen" desc ="检查供应商信息表有没有相关数据" ><![CDATA[
+		SELECT count(1) FROM t_sys_ven_type WHERE comp_id=?
+	]]></sql>
+	<sql name="SY001xtbmBLH_checkSysDuty" desc ="检查表有没有相关数据" ><![CDATA[
+		SELECT count(1) FROM t_sys_emp_duty
+	]]></sql>
+	<sql name="SY001xtbmBLH_checkSysDict" desc ="检查仓库表有没有相关数据" ><![CDATA[
+		SELECT count(1) FROM t_sys_store_dict WHERE comp_id=?
+	]]></sql>
+	<!-- 账套信息管理模块 -->
+	<sql name="SY002ztxxBLH_getAllCompList" desc ="获取所有单位列表" ><![CDATA[
+		select comp_id code, comp_name caption  from  t_sys_company where  is_stop = 0
+	]]></sql>
+
+	<sql name="SY002ztxxBLH_getCopyListByComp" desc ="根据单位获取账套列表" ><![CDATA[
+			select a.copy_code, a.copy_name, a.copy_start_year, a.copy_start_month, b.co_name, a.end_day,a.comp_id,'设置年度账' acct_year  from t_sys_copy a inner join t_sys_co_type b on a.co_code = b.co_code where a.comp_id = ?
+	]]></sql>
+	<sql name="SY002ztxxBLH_getCopyInfoByCode" desc ="根据id获取账套信息" ><![CDATA[
+			select *  from t_sys_copy  where copy_code = ?
+	]]></sql>
+	<sql name="SY002ztxxBLH_getAcctYearInfo" desc ="根据id获取财务年度信息" ><![CDATA[
+			 select * from t_acct_year where  acct_year=? and copy_code=?
+	]]></sql>
+	<sql name="SY002ztxxBLH_getAcctYearByCopy" desc ="根据账套获取年度账列表" ><![CDATA[
+			    select acct_year, period_num,  begin_date,  end_date, copy_code from t_acct_year where  copy_code = ? order by acct_year
+	]]></sql>
+	<sql name="SY003kjqjBLH_getAcctYearPeriodList" desc ="根据id获取会计期间信息" ><![CDATA[
+			 select * from t_acct_year_period where  acct_year=? and copy_code=?
+	]]></sql>
+	<sql name="SY003kjqjBLH_getAcctYearPeriodInfo" desc ="根据id获取会计期间信息" ><![CDATA[
+			 select * from t_acct_year_period where  acct_year=? and copy_code=? and acct_month=?
+	]]></sql>
+	<!-- 系统参数管理模块 -->
+	<sql name="SY006xtcsBLH_checkSysComp" desc ="检查单位表有没有相关数据" ><![CDATA[
+		SELECT count(1) FROM t_sys_company
+	]]></sql>
+	<sql name="SY006xtcsBLH_checkAcctLedger" desc ="检查表有没有相关数据" ><![CDATA[
+		SELECT count(1) FROM t_acct_check_ledger  WHERE curr_code IS NOT NULL AND curr_code<>''
+	]]></sql>
+	<sql name="SY006xtcsBLH_checkAcctCheckItems" desc ="检查表有没有相关数据" ><![CDATA[
+		SELECT count(1) FROM t_acct_check_items  WHERE curr_code IS NOT NULL AND curr_code<>''
+	]]></sql>
+	<sql name="SY006xtcsBLH_checkBudgMateType" desc ="检查表有没有相关数据" ><![CDATA[
+		SELECT count(1) FROM t_budg_mate_type
+	]]></sql>
+	<sql name="SY006xtcsBLH_checkEquiKindDict" desc ="检查表有没有相关数据" ><![CDATA[
+		SELECT count(1) FROM t_equi_kind_dict
+	]]></sql>
+
+	<!-- 会计期间管理模块 -->
+	<sql name="SY003kjqjBLH_getAcctYear" desc ="取会计年度数据" ><![CDATA[
+		SELECT acct_year code, acct_year from t_acct_year where copy_code = ? order by acct_year
+	]]></sql>
+	<!-- 管理员模块授权  -->
+	<sql name="SY014glyMkSqBLH_init_all" desc ="超级管理员模块列表" ><![CDATA[
+		select *
+		  from (select m.*, '1' ischeck
+		          from t_sys_mod m, t_sys_mod_perm p
+		         where m.mod_code = p.mod_code
+		           and m.is_power = 1
+		           and p.user_id = ?
+		        union
+		        select m.*, '0' ischeck
+		          from t_sys_mod m
+		         where m.mod_code != '01'
+		           and m.is_power = 1
+		           and m.mod_code not in (select m.mod_code
+		                                    from t_sys_mod m, t_sys_mod_perm p
+		                                   where m.mod_code = p.mod_code
+		                                     and m.is_power = 1
+		                                     and p.user_id = ?)) modlist
+		 order by modlist.mod_code
+
+	]]></sql>
+	<sql name="SY014glyMkSqBLH_init_list" desc ="管理员模块列表" ><![CDATA[
+		select *
+		  from (select m.*, '1' ischeck
+		          from t_sys_mod m, t_sys_mod_perm p
+		         where m.mod_code = p.mod_code
+		           and p.user_id = ? and m.is_power = 1
+		           and m.mod_code in (select m.mod_code
+		                                from t_sys_mod m, t_sys_mod_perm p
+		                               where m.mod_code = p.mod_code and m.is_power = 1
+		                                 and p.user_id = ?)
+		        union
+		        select m.*, '0' ischeck
+		          from t_sys_mod m, t_sys_mod_perm p
+		         where m.mod_code = p.mod_code
+		           and p.user_id = ? and m.is_power = 1
+		           and m.mod_code not in (select m.mod_code
+		                                    from t_sys_mod m, t_sys_mod_perm p
+		                                   where m.mod_code = p.mod_code and m.is_power = 1
+		                                     and p.user_id = ?)) modlist
+		 order by modlist.mod_code
+	]]></sql>
+	<!-- end 管理员模块授权  -->
+
+	<!-- 用户授权 -->
+	<sql name="SY016yhsqBLH_initCompList_byAdmin" desc ="管理员单位列表" ><![CDATA[
+		select c.comp_id code, c.comp_name caption
+		  from t_sys_user u, t_sys_dba_comp d, t_sys_company c
+		 where u.user_id = d.dba_id
+		   and d.comp_id = c.comp_id and c.is_stop = 0
+		   and u.user_id = ?
+		 union
+		 select c.comp_id code, c.comp_name caption
+		  from t_sys_user u, t_sys_emp e, t_sys_dept d, t_sys_company c
+		 where u.emp_id = e.emp_id
+		   and e.dept_id = d.dept_id
+		   and d.comp_id = c.comp_id and c.is_stop = 0
+		   and u.user_id = ?
+	]]></sql>
+
+	<sql name="SY016yhsqBLH_initCompList_byUser" desc ="管理员单位列表" ><![CDATA[
+		 select c.comp_id code, c.comp_name caption
+		  from t_sys_user u, t_sys_emp e, t_sys_dept d, t_sys_company c
+		 where u.emp_id = e.emp_id  and c.is_stop = 0
+		   and e.dept_id = d.dept_id
+		   and d.comp_id = c.comp_id
+		   and u.user_id = ?
+	]]></sql>
+
+	<sql name="SY016yhsqBLH_initCopyListByComp" desc ="根据单位获取账套列表" ><![CDATA[
+		select t.copy_code code,t.copy_name caption from t_sys_copy t where t.comp_id = ?
+	]]></sql>
+
+	<sql name="SY016yhsqBLH_initCopyListByUserId" desc ="根据用户账套列表" ><![CDATA[
+		select t.copy_code code, t.copy_name caption
+		  from t_sys_copy t
+		 where t.comp_id =
+		       (select distinct c.comp_id
+		          from t_sys_user u, t_sys_emp e, t_sys_dept d, t_sys_company c
+		         where u.emp_id = e.emp_id  and c.is_stop = 0
+		           and e.dept_id = d.dept_id
+		           and d.comp_id = c.comp_id
+		           and u.user_id = ?)
+	]]></sql>
+
+	<sql name="SY016yhsqBLH_initCopyListByUser" desc ="超级用户账套列表" ><![CDATA[
+			select t.copy_code code, t.copy_name caption  from t_sys_copy t
+		]]></sql>
+
+	<sql name="SY016yhsqBLH_initModList_byCopyWithSuperAdmin" desc ="" ><![CDATA[
+			select m.mod_code code, m.mod_name caption
+		      from t_sys_mod m, t_sys_copy_mod t
+		     where t.mod_code = m.mod_code and m.is_power = 1
+		       and t.copy_code = ?
+		]]></sql>
+
+	<sql name="SY016yhsqBLH_initModList_byCopyWithAdmin" desc ="" ><![CDATA[
+			select m.mod_code code, m.mod_name caption
+			  from t_sys_mod m, t_sys_copy_mod t
+			 where t.mod_code = m.mod_code and m.is_power = 1
+			   and t.copy_code = ?
+			   and t.mod_code in
+			       (select t.mod_code from t_sys_mod_perm t where t.user_id = ? or t.user_id = ?)
+		]]></sql>
+
+	<sql name="SY016yhsqBLH_initModList_byAdminWithAdmin" desc ="" ><![CDATA[
+			select m.mod_code code, m.mod_name caption
+			  from t_sys_mod_perm t, t_sys_mod_perm p, t_sys_mod m
+			 where t.mod_code = p.mod_code
+			   and t.mod_code = m.mod_code
+			   and p.mod_code = m.mod_code and m.is_power = 1
+			   and t.user_id = ?
+			   and p.user_id = ?
+		]]></sql>
+
+	<sql name="SY016yhsqBLH_initModList_byCopyAndUser" desc ="功能模块列表" ><![CDATA[
+		select m.mod_code code, m.mod_name caption
+		  from t_sys_mod m,
+		       t_sys_copy_mod t,
+		       (select t.mod_code
+		          from t_sys_mod_perm t
+		         where t.user_id = ?) u
+		 where t.mod_code = m.mod_code and m.is_power = 1
+		   and t.copy_code = ?
+		   and u.mod_code = t.mod_code
+	]]></sql>
+
+	<sql name="SY016yhsqBLH_initModList_byAdmin" desc ="功能模块列表" ><![CDATA[
+		select m.mod_code code, m.mod_name caption
+		  from t_sys_mod_perm t, t_sys_mod m
+		 where m.mod_code = t.mod_code and m.is_power = 1
+		   and t.user_id = ?
+	]]></sql>
+
+	<sql name="SY016yhsqBLH_initModList_bySuperAdmin" desc ="超级管理员功能模块列表" ><![CDATA[
+		select m.mod_code code, m.mod_name caption  from t_sys_mod m where m.is_power = 1
+	]]></sql>
+
+
+	<sql name="SY016yhsqBLH_initCheckTree_gnzyAll" desc ="超级管理员功能列表" ><![CDATA[
+		select func_id code,parent_id pcode,perm_name caption ,'false' checked,func_type leaf from t_sys_perm where mod_code = ?  and scbj=0 order by sortid
+	]]></sql>
+
+	<sql name="SY016yhsqBLH_initCheckTree_gnzyList" desc ="用户功能列表" ><![CDATA[
+		select p.func_id code,
+		       p.perm_name caption,
+		       p.func_type leaf,
+		       p.parent_id pcode,
+		       'false' checked,
+		       'false' nochecked
+		  from t_sys_perm p, t_sys_mod_perm mp
+		 where mp.mod_code = p.mod_code
+		   and mp.user_id = ?
+		   and p.mod_code = ?
+		   and p.scbj = 0
+		 order by p.sortid
+	]]></sql>
+
+
+	<sql name="SY016yhsqBLH_initCheckTree_gnzyListByAdmin" desc ="管理员功能列表" ><![CDATA[
+		select t.*,'false' checked
+		  from (select b.func_id code,
+		               b.perm_name caption,
+		               b.func_type leaf,
+		               b.parent_id pcode,
+		               'false' nochecked,
+		               b.sortid
+		          from t_sys_user_perm a, t_sys_perm b
+             where a.func_id = b.func_id
+               and a.user_id = ?
+               and a.copy_code is null
+               and b.mod_code = '01'
+               and b.scbj = 0
+            union
+            select a.func_id code,
+                   b.perm_name caption,
+                   b.func_type leaf,
+                   b.parent_id pcode,
+                   'false' nochecked,
+                   b.sortid
+              from t_sys_group_perm a,
+                   t_sys_perm       b,
+                   t_sys_group      c,
+                   t_sys_user_group d
+             where a.func_id = b.func_id
+               and a.group_id = c.group_id
+               and d.group_id = c.group_id
+               and d.user_id = ?
+               and a.copy_code is null
+               and b.mod_code = '01'
+               and b.scbj = 0) t
+     order by t.sortid
+	]]></sql>
+
+	<sql name="SY016yhsqBLH_initCheckTree_gnzyListWithCopy" desc ="根据帐套功能列表" ><![CDATA[
+		select t.*,'false' checked,'false' nochecked
+	      from (select b.func_id code,
+	                   b.perm_name caption,
+	                   b.func_type leaf,
+	                   b.parent_id pcode,
+		               b.sortid
+	              from t_sys_user_perm a, t_sys_perm b
+	             where a.func_id = b.func_id
+	               and a.user_id = ?
+	               and b.mod_code = ?
+	               and a.copy_code = ?
+	               and b.scbj = 0
+	            union
+	            select a.func_id code,
+	                   b.perm_name caption,
+	                   b.func_type leaf,
+	                   b.parent_id pcode,
+		               b.sortid
+	              from t_sys_group_perm a,
+	                   t_sys_perm       b,
+	                   t_sys_group      c,
+	                   t_sys_user_group d
+	             where a.func_id = b.func_id
+	               and a.group_id = c.group_id
+	               and d.group_id = c.group_id
+	               and d.user_id = ?
+	               and b.mod_code = ?
+	               and a.copy_code = ?
+	               and b.scbj = 0) t
+	     order by t.sortid
+	]]></sql>
+
+
+	<sql name="SY016yhsqBLH_initCheckTree_gnzyListWithOutCopy" desc ="用户已授权功能列表" ><![CDATA[
+		select t.*,'true' checked
+		  from (select b.func_id code,
+		               b.perm_name caption,
+		               b.func_type leaf,
+		               b.parent_id pcode,
+		               'false' nochecked,
+		               b.sortid
+		          from t_sys_user_perm a, t_sys_perm b
+		         where a.func_id = b.func_id
+		           and a.user_id = ?
+		           and b.mod_code = ?
+		           and a.copy_code is null
+		           and b.scbj = 0
+		        union
+		        select a.func_id code,
+		               b.perm_name caption,
+		               b.func_type leaf,
+		               b.parent_id pcode,
+		               'true' nochecked,
+		               b.sortid
+		          from t_sys_group_perm a,
+		               t_sys_perm       b,
+		               t_sys_group      c,
+		               t_sys_user_group d
+		         where a.func_id = b.func_id
+		           and a.group_id = c.group_id
+		           and d.group_id = c.group_id
+		           and d.user_id = ?
+		           and b.mod_code = ?
+		           and a.copy_code is null
+		           and b.scbj = 0) t
+		 order by t.sortid
+	]]></sql>
+
+
+	<sql name="SY016yhsqBLH_initCheckTree_gnzyListChecked" desc ="用户已授权功能列表" ><![CDATA[
+		select t.*,'true' checked
+		  from (select b.func_id code,
+		               b.perm_name caption,
+		               b.func_type leaf,
+		               b.parent_id pcode,
+		               'false' nochecked,
+		               b.sortid
+		          from t_sys_user_perm a, t_sys_perm b
+		         where a.func_id = b.func_id
+		           and a.user_id = ?
+		           and a.copy_code=?
+		           and b.mod_code = ?
+		           and b.scbj = 0
+		        union
+		        select a.func_id code,
+		               b.perm_name caption,
+		               b.func_type leaf,
+		               b.parent_id pcode,
+		               'true' nochecked,
+		               b.sortid
+		          from t_sys_group_perm a,
+		               t_sys_perm       b,
+		               t_sys_group      c,
+		               t_sys_user_group d
+		         where a.func_id = b.func_id
+		           and a.group_id = c.group_id
+		           and d.group_id = c.group_id
+		           and d.user_id = ?
+		           and a.copy_code=?
+		           and b.mod_code = ?
+		           and b.scbj = 0) t
+		 order by t.sortid
+
+	]]></sql>
+
+
+	<!-- 用户组授权 -->
+	<sql name="SY018yhzsqBLH_initCheckTree" desc ="功能模块列表" ><![CDATA[
+		select p.func_id code,
+		       t.parent_id pcode,
+		       t.perm_name caption,
+		       'true' checked,
+		       t.func_type leaf
+		  from t_sys_group_perm p, t_sys_perm t
+		 where p.group_id = ?
+		   and p.func_id = t.func_id
+		   and p.copy_code = ?
+		   and p.mod_code = ?
+		   and t.scbj=0
+	]]></sql>
+
+	<sql name="SY016yhsqBLH_initDataSourceList" desc ="数据资源列表" ><![CDATA[
+		select t.table_id code,t.table_name caption from t_sys_table t
+	]]></sql>
+
+	<sql name="SY016yhsqBLH_getDataSourceById" desc ="获取数据资源" ><![CDATA[
+		select * from t_sys_table t where t.table_id = ? and t.is_power = 1
+	]]></sql>
+
+	<sql name="SY018yhzsqBLH_initCompList" desc ="获取管理员所辖单位" ><![CDATA[
+		select c.comp_id code, c.comp_name caption
+		  from t_sys_user u, t_sys_dba_comp d, t_sys_company c
+		 where u.user_id = d.dba_id and c.is_stop = 0
+		   and d.comp_id = c.comp_id
+		   and u.user_id = ?
+	]]></sql>
+
+	<sql name="SY018yhzsqBLH_initCompList_bySuperAdmin" desc ="获取管理员所辖单位" ><![CDATA[
+		select c.comp_id code, c.comp_name caption  from  t_sys_company c where  c.is_stop = 0
+	]]></sql>
+
+
+
+	<sql name="SY018yhzsqBLH_initCompListBySuperAdmin" desc ="获取用户单位" ><![CDATA[
+		select c.comp_id code, c.comp_name caption from t_sys_company c where  c.is_stop = 0
+	]]></sql>
+
+	<sql name="SY005dictBLH_initHcbxxList" desc="获取缓存表信息"><![CDATA[
+		select * from t_xt_hcbxx
+	]]>
+	</sql>
+
+
+	<sql name="SY016yhsqBLH_getGlyListByGroupId" desc="根据组ID与当前操作用户获取管理员列表"><![CDATA[
+		select u.*,d.dept_id,d.comp_id
+		  from t_sys_user u, t_sys_dept d, t_sys_emp e
+		 where e.emp_id = u.emp_id
+		   and d.dept_id = e.dept_id
+		   and u.is_dba = 1
+		   and d.dept_id = ?
+		   and u.sj_id = ?
+	]]>
+	</sql>
+
+	<sql name="SY016yhsqBLH_initGlyList" desc="根据当前登陆用户获取管理员列表"><![CDATA[
+		select u.*,d.dept_id,d.comp_id
+		  from t_sys_user u, t_sys_dept d, t_sys_emp e
+		 where e.emp_id = u.emp_id
+		   and u.is_dba = 1
+		   and d.dept_id = e.dept_id
+		   and u.sj_id = ?
+	]]>
+	</sql>
+
+	<sql name="SY012yhBLH_initDetail_yhqxList" desc="获取用户权限列表"><![CDATA[
+		select comp.comp_name,copy.copy_name,m.mod_name,comp.comp_id,copy.copy_code,m.mod_code
+		  from (select t.*
+		          from (select a.mod_code,
+		                       a.copy_code
+
+		                  from t_sys_user_perm a, t_sys_perm b
+		                 where a.func_id = b.func_id
+		                   and a.user_id = ?
+		                   and b.scbj = 0
+		                   and a.mod_code = b.mod_code
+		                union
+		                select a.mod_code,
+		                       a.copy_code
+		                  from t_sys_group_perm a,
+		                       t_sys_perm       b,
+		                       t_sys_group      c,
+		                       t_sys_user_group d
+		                 where a.func_id = b.func_id
+		                   and a.group_id = c.group_id
+		                   and d.group_id = c.group_id
+		                   and d.user_id = ?
+		                   and a.mod_code = b.mod_code
+		                   and b.scbj = 0) t) v,
+		       t_sys_mod m,
+		       t_sys_copy copy,
+		       t_sys_company comp
+		 where v.mod_code = m.mod_code and m.is_power=1  and v.copy_code = copy.copy_code and comp.is_stop=0
+		   and copy.comp_id = comp.comp_id
+
+	]]>
+	</sql>
+	<sql name="SY012yhBLH_initYhqxTree" desc ="用户已授权功能列表" ><![CDATA[
+		select t.*
+		  from (select b.func_id code,
+		               b.perm_name caption,
+		               b.func_type leaf,
+		               b.parent_id pcode,
+		               'false' nochecked,
+		               b.sortid
+		          from t_sys_user_perm a, t_sys_perm b
+		         where a.func_id = b.func_id
+		           and a.user_id = ?
+		           and a.copy_code=?
+		           and b.mod_code = ?
+		           and b.scbj = 0
+		        union
+		        select a.func_id code,
+		               b.perm_name caption,
+		               b.func_type leaf,
+		               b.parent_id pcode,
+		               'true' nochecked,
+		               b.sortid
+		          from t_sys_group_perm a,
+		               t_sys_perm       b,
+		               t_sys_group      c,
+		               t_sys_user_group d
+		         where a.func_id = b.func_id
+		           and a.group_id = c.group_id
+		           and d.group_id = c.group_id
+		           and d.user_id = ?
+		           and a.copy_code=?
+		           and b.mod_code = ?
+		           and b.scbj = 0) t
+		 order by t.sortid
+
+	]]></sql>
+
+	<sql name="SY018yhzsqBLH_initGroupQxDetail" desc="获取用户组权限列表"><![CDATA[
+		select distinct *
+		  from (select p.comp_name,
+		               c.copy_name,
+		               m.mod_name,
+		               p.comp_id,
+		               c.copy_code,
+		               m.mod_code
+		          from t_sys_group_perm g,
+		               t_sys_copy       c,
+		               t_sys_mod        m,
+		               t_sys_company    p
+		         where g.copy_code = c.copy_code
+		           and c.comp_id = p.comp_id
+		           and m.mod_code = g.mod_code
+		           and m.is_power = 1
+		           and p.is_stop = 0
+		           and g.group_id = ? ) a
+		         order by  comp_id,  copy_code, mod_code
+	]]>
+	</sql>
+
+	<sql name="initGroupQxTree" desc ="组功能资源列表" ><![CDATA[
+		select p.func_id code,
+		       t.parent_id pcode,
+		       t.perm_name caption,
+		       t.func_type leaf
+		  from t_sys_group_perm p, t_sys_perm t
+		 where p.group_id = ?
+		   and p.func_id = t.func_id
+		   and p.copy_code = ?
+		   and p.mod_code = ?
+		   and t.scbj=0
+	]]></sql>
+	<!-- 系统管理通用模块 -->
+	<sql name="SysTreeBLH_getAllCompList1" desc ="获取所有单位列表" ><![CDATA[
+		select t.* from t_sys_company t where t.super_id is null and (t.is_stop=0 or t.is_stop is null) union
+            select t.*from t_sys_company t where t.super_id =
+            (select t.comp_id from t_sys_company t where t.super_id is null and (t.is_stop=0 or t.is_stop is null)) and (t.is_stop=0 or t.is_stop is null)
+	]]></sql>
+	<sql name="SysTreeBLH_getAllCompList2" desc ="获取所有单位列表" ><![CDATA[
+		select t.* from t_sys_company t where t.comp_id=? and (t.is_stop=0 or t.is_stop is null) union
+		 	   select t.* from t_sys_company t where t.super_id =
+			     (select t.comp_id from t_sys_company t where t.comp_id=? and (t.is_stop=0 or t.is_stop is null)) and (t.is_stop=0 or t.is_stop is null)
+	]]></sql>
+	<sql name="SysTreeBLH_getAllCompList3" desc ="获取所有单位列表" ><![CDATA[
+		select t.*,'false' checked from t_sys_company t where t.super_id is null and (t.is_stop=0 or t.is_stop is null) union
+             select t.*,'false' checked from t_sys_company t where t.super_id =
+            (select t.comp_id from t_sys_company t where t.super_id is null and (t.is_stop=0 or t.is_stop is null)) and (t.is_stop=0 or t.is_stop is null)
+	]]></sql>
+  <sql name="SysTreeBLH_getAllCompList4" desc ="获取所有单位列表" ><![CDATA[
+		 select t.*,'false' checked from t_sys_company t where t.comp_id=? and (t.is_stop=0 or t.is_stop is null) union
+		  select t.* ,'false' checked from t_sys_company t where t.super_id =
+			       (select t.comp_id from t_sys_company t where t.comp_id=? and (t.is_stop=0 or t.is_stop is null)) and (t.is_stop=0 or t.is_stop is null)
+	]]></sql>
+	<sql name="SysTreeBLH_empTreeInit" desc ="获取职工部门列表" ><![CDATA[
+		 select t.comp_id dept_id, 0 is_last,t.comp_name dept_name, null super_id from t_sys_company t where t.comp_id=? union
+					 select  d.dept_id dept_id, d.is_last,d.dept_name,d.comp_id super_id from t_sys_dept d ,t_sys_company c
+					 where d.comp_id = c.comp_id and d.comp_id=? and d.super_id is null and (d.is_stop=0 or d.is_stop is null)
+	]]></sql>
+	<sql name="SysTreeBLH_depTreeInit" desc ="获取部门列表" ><![CDATA[
+		 select t.comp_id dept_id, 0 is_last,t.comp_name dept_name, null super_id from t_sys_company t where t.comp_id=? union
+                           select  d.dept_id dept_id, d.is_last,d.dept_name,d.comp_id super_id from t_sys_dept d ,t_sys_company c
+                           where d.comp_id = c.comp_id and d.comp_id=? and d.super_id is null and (d.is_stop=0 or d.is_stop is null or d.is_stop=2)
+	]]></sql>
+
+	<!-- 科目编码模块 -->
+	<sql name="SY007kmbmBLH_add" desc ="添加科目" ><![CDATA[
+		select * from t_sys_acct_subj where acct_subj_code=?
+	]]></sql>
+	<!-- 单位信息模块 -->
+	<sql name="SY008dwxxBLH_formQuery" desc ="单位查询" ><![CDATA[
+		select * from t_sys_company where comp_id = ? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY008dwxxBLH_add" desc ="查单位" ><![CDATA[
+		select * from t_sys_company where comp_id=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+  <sql name="SY008dwxxBLH_add1" desc ="查单位" ><![CDATA[
+		select * from t_sys_company where comp_code=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY008dwxxBLH_update" desc ="查单位" ><![CDATA[
+		 select * from t_sys_company where comp_code=? and comp_id!=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY008dwxxBLH_update1" desc ="查单位" ><![CDATA[
+		 select * from t_sys_company where comp_id=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY008dwxxBLH_update2" desc ="查单位" ><![CDATA[
+		select * from t_sys_company where comp_code like ? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY008dwxxBLH_dwCheck" desc ="查单位" ><![CDATA[
+		 select * from t_sys_company where is_stop=0 or is_stop is null
+	]]></sql>
+	<sql name="SY008dwxxBLH_delete" desc ="查单位" ><![CDATA[
+		 select * from t_sys_company where super_id=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY008dwxxBLH_delete1" desc ="查部门" ><![CDATA[
+		select * from t_sys_dept where comp_id=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY008dwxxBLH_delete2" desc ="查单位" ><![CDATA[
+		select * from t_sys_company where comp_id=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY008dwxxBLH_delete3" desc ="查单位" ><![CDATA[
+		select * from t_sys_company where comp_id!=? and super_id=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<!-- 部门编码模块 -->
+	<sql name="SY009bmbmBLH_init" desc ="查单位" ><![CDATA[
+		select c.comp_id code,c.comp_name caption from t_sys_company c order by comp_code
+	]]></sql>
+	<sql name="SY009bmbmBLH_add" desc ="查部门" ><![CDATA[
+		select * from t_sys_dept where dept_id = ? and (is_stop=0 or is_stop is null)
+	]]></sql>
+  <sql name="SY009bmbmBLH_add1" desc ="查部门" ><![CDATA[
+		select * from t_sys_dept where dept_code=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY009bmbmBLH_add2" desc ="查部门" ><![CDATA[
+		select * from t_sys_dept where dept_id = ?
+	]]></sql>
+	<sql name="SY009bmbmBLH_update" desc ="查部门" ><![CDATA[
+		select * from t_sys_dept where dept_code=? and dept_id!=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY009bmbmBLH_update1" desc ="查部门" ><![CDATA[
+		 select * from t_sys_dept where super_id=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY009bmbmBLH_update2" desc ="查部门" ><![CDATA[
+		select * from t_sys_emp where dept_id=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY009bmbmBLH_update3" desc ="查部门" ><![CDATA[
+		 select * from t_sys_dept where dept_id=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY009bmbmBLH_update4" desc ="查部门" ><![CDATA[
+		 select * from t_sys_dept where dept_code like ? and (is_stop=0 or is_stop is null or is_stop=2)
+	]]></sql>
+	<sql name="SY009bmbmBLH_delete1" desc ="查职工" ><![CDATA[
+		select * from t_sys_emp where dept_id=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY009bmbmBLH_delete2" desc ="查部门" ><![CDATA[
+		select * from t_sys_dept where super_id=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY009bmbmBLH_delete3" desc ="查部门" ><![CDATA[
+		select * from t_sys_dept where dept_id=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY009bmbmBLH_delete4" desc ="查部门" ><![CDATA[
+		select * from t_sys_dept where dept_id!=? and super_id=? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<!-- 职工信息模块 -->
+	<sql name="SY010zgxxBLH_init" desc ="单位查询" ><![CDATA[
+		select c.comp_id code,c.comp_name caption from t_sys_company c where (is_stop=0 or is_stop is null) order by comp_code
+	]]></sql>
+	<sql name="SY010zgxxBLH_tableQuery" desc ="获取所有职工" ><![CDATA[
+		select t.* from t_sys_emp t where dept_id = ? and (is_stop=0 or is_stop is null or is_stop=2)
+	]]></sql>
+  <sql name="SY010zgxxBLH_add" desc ="查职工" ><![CDATA[
+		select * from t_sys_emp where emp_code = ? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<sql name="SY010zgxxBLH_update" desc ="查职工" ><![CDATA[
+		select * from t_sys_emp where emp_code = ? and emp_id != ? and (is_stop=0 or is_stop is null)
+	]]></sql>
+	<!-- 用户管理模块 -->
+	<sql name="SY012yhBLH_init" desc ="单位查询" ><![CDATA[
+		select c.comp_id code,c.comp_name caption from t_sys_company c order by comp_code
+	]]></sql>
+	<sql name="SY012yhBLH_tableQuery" desc ="用户查询" ><![CDATA[
+		select u.*,c.comp_id,c.comp_name,g.group_id from t_sys_user u,t_sys_dept d,t_sys_emp e ,t_sys_company c,t_sys_user_group g where
+		 e.emp_id=u.emp_id and d.dept_id=e.dept_id and c.comp_id = d.comp_id and g.user_id=u.user_id and u.emp_id
+		 in (select emp_id from t_sys_emp e where e.dept_id=? and sj_id=? and (u.scbj=0 or u.scbj is null)) and u.is_dba=0
+	]]></sql>
+  <sql name="SY012yhBLH_tableDbaQuery" desc ="管理员查询" ><![CDATA[
+		select u.*,c.comp_id,c.comp_name,g.group_id from t_sys_user u,t_sys_dept d,t_sys_emp e ,t_sys_company c,t_sys_user_group g where
+		 e.emp_id=u.emp_id and d.dept_id=e.dept_id and c.comp_id = d.comp_id  and g.user_id=u.user_id and u.emp_id
+		 in (select emp_id from t_sys_emp e where e.dept_id=? and sj_id=? and (u.scbj=0 or u.scbj is null)) and u.is_dba=1
+	]]></sql>
+	<sql name="SY012yhBLH_add" desc ="查用户" ><![CDATA[
+		select * from t_sys_user where user_code = ? and (scbj=0 or scbj is null)
+	]]></sql>
+	<sql name="SY012yhBLH_initAdd" desc ="职工查询" ><![CDATA[
+		select emp_id code,emp_name caption from t_sys_emp t where
+			 t.dept_id=? and (t.is_stop=0 or t.is_stop is null)
+	]]></sql>
+	<sql name="SY012yhBLH_initAdd2" desc ="获取用户组" ><![CDATA[
+		select group_id code,group_name caption from t_sys_group where dba_id=?
+	]]></sql>
+  <sql name="SY012yhBLH_initDetail" desc ="查职工" ><![CDATA[
+		select emp_id code,emp_name caption from t_sys_emp t where t.dept_id=? and (t.is_stop=0 or t.is_stop is null)
+	]]></sql>
+	<sql name="SY012yhBLH_initDetail2" desc ="查职工" ><![CDATA[
+		select group_id code,group_name caption from t_sys_group where dba_id=?
+	]]></sql>
+	<sql name="SY012yhBLH_update" desc ="查用户" ><![CDATA[
+		select * from t_sys_user where user_code = ? and user_id != ? and (scbj=0 or scbj is null)
+	]]></sql>
+	<!-- 用户组管理模块 -->
+	<sql name="SY011yhzBLH_add" desc ="组查询" ><![CDATA[
+		select * from t_sys_group where group_code = ? or group_name=?
+	]]></sql>
+	<sql name="SY011yhzBLH_update" desc ="用户查询" ><![CDATA[
+		select * from t_sys_group where (group_code = ? or group_name=?) and group_id!=?
+	]]></sql>
+	<sql name="SY011yhzBLH_query" desc ="用户查询" ><![CDATA[
+		select t.* from t_sys_group t where group_code like ? and group_name like ? and dba_id=? order by group_code
+	]]></sql>
+</sqlfile>

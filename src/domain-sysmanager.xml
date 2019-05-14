@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bizLogicHandler-config>
+	<default-dataSource-name>persistence.ds002</default-dataSource-name>
+	 <!-- 系统编码规则管理 -->
+	<bizLogicHandler>
+		<bizLogicHandler-name>SY001xtbmBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.sysmanager.base.blh.SY001xtbmBLH</bizLogicHandler-class>
+	</bizLogicHandler>
+	<!-- 帐套信息管理 -->
+	<bizLogicHandler>
+		<bizLogicHandler-name>SY002ztxxBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.sysmanager.base.blh.SY002ztxxBLH</bizLogicHandler-class>
+	</bizLogicHandler>
+	 <!-- 会计期间管理 -->
+	<bizLogicHandler>
+		<bizLogicHandler-name>SY003kjqjBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.sysmanager.base.blh.SY003kjqjBLH</bizLogicHandler-class>
+	</bizLogicHandler>	
+	<!-- 系统参数管理 -->
+	<bizLogicHandler>
+		<bizLogicHandler-name>SY006xtcsBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.sysmanager.dict.blh.SY006xtcsBLH</bizLogicHandler-class>
+	</bizLogicHandler>
+ 	<!-- 公用信息/科目编码 -->
+	<bizLogicHandler>
+		<bizLogicHandler-name>SY007kmbmBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.sysmanager.info.blh.SY007kmbmBLH</bizLogicHandler-class>
+	</bizLogicHandler>
+	<!-- 用户及权限/用户管理 -->
+	<bizLogicHandler>
+		<bizLogicHandler-name>SY012yhBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.sysmanager.authority.blh.SY012yhBLH</bizLogicHandler-class>
+	</bizLogicHandler>
+	<!-- 公用信息/单位信息 -->
+	<bizLogicHandler>
+		<bizLogicHandler-name>SY008dwxxBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.sysmanager.info.blh.SY008dwxxBLH</bizLogicHandler-class>
+	</bizLogicHandler>
+	<!-- 公用信息/部门信息 -->
+	<bizLogicHandler>
+		<bizLogicHandler-name>SY009bmbmBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.sysmanager.info.blh.SY009bmbmBLH</bizLogicHandler-class>
+	</bizLogicHandler>
+	<!-- 公用信息/职工信息 -->
+	<bizLogicHandler>
+		<bizLogicHandler-name>SY010zgxxBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.sysmanager.info.blh.SY010zgxxBLH</bizLogicHandler-class>
+	</bizLogicHandler>
+	<!-- 用户及权限/用户组管理 -->
+	<bizLogicHandler>
+		<bizLogicHandler-name>SY011yhzBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.sysmanager.authority.blh.SY011yhzBLH</bizLogicHandler-class>
+	</bizLogicHandler>
+	<!-- 用户及权限/用户组管理 -->
+	<bizLogicHandler>
+		<bizLogicHandler-name>SysTreeBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.sysmanager.comm.blh.SysTreeBLH</bizLogicHandler-class>
+	</bizLogicHandler>
+	<!-- 管理员模块授权 -->
+	<bizLogicHandler>
+		<bizLogicHandler-name>SY014glyMkSqBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.sysmanager.authority.blh.SY014glyMkSqBLH</bizLogicHandler-class>
+	</bizLogicHandler>
+	
+	<!-- 用户授权 -->
+	<bizLogicHandler>
+		<bizLogicHandler-name>SY016yhsqBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.sysmanager.authority.blh.SY016yhsqBLH</bizLogicHandler-class>
+	</bizLogicHandler>
+	
+	<!-- 用户组授权 -->
+	<bizLogicHandler>
+		<bizLogicHandler-name>SY018yhzsqBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.sysmanager.authority.blh.SY018yhzsqBLH</bizLogicHandler-class>
+	</bizLogicHandler>
+	
+	
+	<!-- 字典表管理 -->
+	<bizLogicHandler>
+		<bizLogicHandler-name>SY005dictBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.sysmanager.dict.blh.SY005dictBLH</bizLogicHandler-class>
+	</bizLogicHandler>
+	
+	<!-- 单位授权 --> 
+	 <bizLogicHandler>
+		<bizLogicHandler-name>SY013glydwsqBLH</bizLogicHandler-name>
+		<bizLogicHandler-class>com.rab.sys.sysmanager.authority.blh.SY013glydwsqBLH</bizLogicHandler-class>
+	</bizLogicHandler>
+	 
+</bizLogicHandler-config>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.action.extension" value="" />
+	<constant name="struts.i18n.encoding" value="UTF-8"/>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<constant name="struts.configuration.classpath.defaultParentPackage" value="default" /> 
+
+
+	<package name="default" namespace="" extends="json-default">
+		<default-action-ref name="pagenotfound"></default-action-ref>  
+			<action name="pagenotfound"> 
+            	<result>/404.htm</result> 
+   			</action> 
+		<action name="ajax" class="com.rab.framework.web.action.base.BaseAjaxAction">
+			<result name="result" type="json">
+				<param name="root">resVO</param>
+			</result>
+		</action>		 			
+	</package>
+	
+	<package name="dispatcher" namespace="" extends="struts-default">	
+		<action name="hbos" class="com.rab.framework.web.action.base.BaseDispatcherAction">
+			<result name="success" type="dispatcher">${returnUrl}</result>
+		</action>
+		<action name="login" class="com.rab.sys.security.login.web.LoginAction">
+			<result name="success" type="dispatcher">${returnUrl}</result>
+		</action>
+	</package>
+
+	<!-- Add packages here -->
+
+</struts>

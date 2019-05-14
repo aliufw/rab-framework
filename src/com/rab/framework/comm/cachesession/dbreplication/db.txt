@@ -1,0 +1,7 @@
+create table t_sys_dbreplication(
+	sessionid		varchar(30)		not null,
+	key				varchar(30)		not null,
+	data			blob			not null,
+	lastModified	number(15)		not null
+)
+;

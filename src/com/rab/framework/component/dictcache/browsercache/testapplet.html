@@ -1,0 +1,145 @@
+<htm>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>
+缓存管理编程接口示例程序
+</title>
+</head>
+
+<script>
+
+	 window.onload = function(){
+	   var host = document.location.host;
+	   var pos = host.indexOf(":");
+	   var ip   = host.substring(0, pos);
+	   var port = host.substring(pos+1);
+
+       document.all.serverip.value = ip;
+	   document.all.serverport.value = port;
+	}
+</script>
+
+<script language="JavaScript">
+	function startCacheManager(){
+	   var serverip = document.all.serverip.value;
+	   var serverport = document.all.serverport.value;
+	   var managerServletURI = document.all.managerServletURI.value;
+	   var updateCyc = document.all.updateCyc.value;
+	   var localrootdir = document.all.localrootdir.value;
+	   
+	   document.browserCacheManagerApplet.setServerip(serverip);
+	   document.browserCacheManagerApplet.setServerport(serverport);
+	   document.browserCacheManagerApplet.setManagerServletURI(managerServletURI);
+	   document.browserCacheManagerApplet.setUpdateCyc(updateCyc);
+	   
+	   document.browserCacheManagerApplet.setLocalrootdir(localrootdir);
+	   
+	   document.browserCacheManagerApplet.initCacheManager();
+	}
+	
+	function getMonitorState(){
+		var state = document.browserCacheManagerApplet.getMonitorState();
+		document.all.monitorstate.value = state;
+	}
+	
+	function restartUpdateMonitor(){
+		document.browserCacheManagerApplet.restartUpdateMonitor();
+		var state = document.browserCacheManagerApplet.getMonitorState();
+		document.all.monitorstate2.value = state;
+	}
+	
+	function getCurrentCacheList(){
+		var list = document.browserCacheManagerApplet.getCurrentCacheList();
+		document.all.list.value = list;
+	}
+	
+	function updateCacheTable(){
+		document.browserCacheManagerApplet.updateCacheTable();
+		var list2 = document.browserCacheManagerApplet.getCurrentCacheList();
+		document.all.list2.value = list2;
+	}
+	
+	
+	function getCacheTable(){
+		var tablename = document.all.tablename.value;
+		var table = document.browserCacheManagerApplet.getCacheTable(tablename);
+		document.all.cachedata.value = table;
+	}
+</script>
+ 
+<body>  
+	  <applet
+	      name     = "browserCacheManagerApplet"
+		  codebase = "."
+		  code     = "com.cssnet.platform.baseframe.comm.codecache.browsercache.BrowserCacheManager"
+		  archive  = "signtestapplet.jar"
+		  width    = "100"
+		  height   = "10" 
+		>
+      </applet>
+
+缓存服务启动管理
+<table border="1"> 
+	<tr>
+		<td>服务器地址</td> 
+		<td><input name="serverip" size="30" value="127.0.0.1"/></td>
+	</tr>
+	<tr>
+		<td>服务器端口号</td> 
+		<td><input name="serverport" size="30" value="8090"/></td>
+	</tr>
+	<tr>
+		<td>ServletURI</td> 
+		<td><input name="managerServletURI" size="30" value="/WebCodeCacheServlet"/></td>
+	</tr>
+	<tr>
+		<td>自动更新周期（分钟）</td> 
+		<td><input name="updateCyc" size="30" value="3"/></td>
+	</tr>
+	<tr>
+		<td>缓存数据在本地存放的路径</td> 
+		<td><input name="localrootdir" size="30" value="c:/"/></td>
+	</tr>
+	<tr>
+		<td>-</td> 
+		<td><input type="button" value="启动缓存管理" onclick="startCacheManager();"/></td>
+	</tr>
+</table>	  
+<br/>
+缓存服务状态管理
+<table border="1"> 
+	<tr>
+		<td>缓存状态查询<input type="button" value="查询" onclick="getMonitorState();"/></td> 
+		<td><input name="monitorstate" size="30" value=""/></td>
+	</tr>
+	<tr>
+		<td>重启缓存监控<input type="button" value="重启" onclick="restartUpdateMonitor();"/></td> 
+		<td>当前状态：<input name="monitorstate2" size="30" value=""/></td>
+	</tr>
+	<tr>
+		<td>当前缓存数据及版本号<input type="button" value="查询" onclick="getCurrentCacheList();"/></td> 
+		<td>当前状态：<textarea name="list" cols="30" rows="5"></textarea></td>
+	</tr>
+	<tr>
+		<td>更新缓存的代码表数据<input type="button" value="更新" onclick="updateCacheTable();"/></td> 
+		<td>更新后状态：<textarea name="list2" cols="30" rows="5"></textarea></td>
+	</tr>
+	
+</table>	  
+
+<br/>
+缓存数据查询
+<table border="1"> 
+	<tr>
+		<td>缓存表名称</td> 
+		<td><input name="tablename" size="50" value=""/>
+			<input type="button" value="查询" onclick="getCacheTable();"/></td>
+	</tr>
+	<tr>
+		<td>缓存数据</td> 
+		<td><textarea name="cachedata" cols="100" rows="20"></textarea></td>
+	</tr>
+</table>	  
+
+</body>
+</htm>

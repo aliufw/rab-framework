@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app>
+	<!-- ========================================================= -->
+	<!-- filter：HttpSession超时控制器                              -->
+	<!-- 执行顺序：1/4                                              -->
+	<!-- ========================================================= -->
+	<filter>
+		<filter-name>TimeOutCheckFilter</filter-name>
+		<filter-class>com.rab.framework.web.filter.TimeOutCheckFilter</filter-class>
+		<init-param>
+			<param-name>timeout-redirect-url</param-name>
+			<param-value>/timeout.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>no-check-uri</param-name>
+			<param-value>/timeout.jsp,/login.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>state</param-name>
+			<param-value>off</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>TimeOutCheckFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- ========================================================= -->
+	<!-- filter：运行时功能访问安全控制器                            -->
+	<!-- 执行顺序：2/4                                              -->
+	<!-- ========================================================= -->
+	<filter>
+		<filter-name>WebServerSecurityCheckFilter</filter-name>
+		<filter-class>com.rab.framework.web.filter.WebServerSecurityCheckFilter</filter-class>
+		<init-param>
+			<param-name>false-to-redirect-url</param-name>
+			<param-value>/checkfalse.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>state</param-name>
+			<param-value>off</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>WebServerSecurityCheckFilter</filter-name>
+		<url-pattern>/hbos</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>WebServerSecurityCheckFilter</filter-name>
+		<url-pattern>/ajax</url-pattern>
+	</filter-mapping>
+
+	<!-- ========================================================= -->
+	<!-- filter：设定请求的字符编码格式                              -->
+	<!-- 执行顺序：3/4                                              -->
+	<!-- ========================================================= -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>com.rab.framework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param> 
+		<init-param>
+			<param-name>state</param-name>
+			<param-value>off</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/hbos</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/ajax</url-pattern>
+	</filter-mapping>
+	
+	
+	<!-- ========================================================= -->
+	<!-- filter：struts2基本映射配置                                -->
+	<!-- 执行顺序：4/4                                              -->
+	<!-- ========================================================= -->
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/hbos</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/ajax</url-pattern>
+	</filter-mapping>
+
+	<!-- ========================================================= -->
+	<!-- 系统启动入口                                               -->
+	<!-- ========================================================= -->
+	<servlet>
+		<servlet-name>StartPlatformServlet</servlet-name>
+		<servlet-class>com.rab.framework.web.StartPlatformServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+
+
+	<!-- ========================================================= -->
+	<!-- HTTP Session超时时间设置，单位为分钟                        -->
+	<!-- ========================================================= -->
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+	<!-- ========================================================= -->
+	<!-- 首页定义                                                   -->
+	<!-- ========================================================= -->
+	<welcome-file-list>
+		<welcome-file>index.htm</welcome-file>
+	</welcome-file-list>
+
+
+
+</web-app>

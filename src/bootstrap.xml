@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bootstrap-configuration>
+		<!-- 
+			运行模式：
+			开发模式：develop， 产品模式：product 
+			在开发模式下，采用懒加载的模式初始化配置文件，以提升启动性能
+			在产品模式下，采用预加载的模式初始化配置文件，以提升服务性能
+			
+			影响的内容包括：
+			1. 在develop模式下，Hibernate的数据库映射文件懒加载方式运行
+			2. 在develop模式下，字典表数据缓存懒加载运行
+			3. 在develop模式下，服务器屏蔽用户登录状态（session）检查
+		--> 
+		<property name="running-model" value="product" />
+		
+		<!-- 
+			是否启用运行时安全管理，在系统安全控制中，具有最高优先级。
+			如果不设置该参数，则系统默认该参数为true
+			如果该参数设置为false，则运行时控制如下项目：
+			1）系统启动时，不启动URI安全检查器 VHSecurityManager
+			2）运行时，服务器屏蔽用户登录状态（session）检查
+			3）运行时，不执行URI安全检查过滤器 WebServerSecurityCheckFilter
+		-->
+		<property name="runtime-security-manager" value="false"/> 
+		
+		<!-- 是否使用EJB。使用EJB - true，不使用EJB - false -->
+		<property name="ejb-model" value="false"/> 
+		
+		<!-- 是否在日志中输出 sql 语句，以便于调试跟踪 -->
+		<property name="sql-log" value="true"/> 
+
+		<!-- 是否打开性能日志开关 -->
+		<property name="perf-log" value="true"/> 
+
+		<!-- 默认数据库类型 -->
+		<property name="db-type" value="oracle"/> 
+
+		<!-- 上传附件的临时存放路径 -->
+		<property name="uploadfile-tempdir" value="D:/workdir/vh-smarterp/upload"/> 
+		<!-- 上传附件的最大尺寸限制 -->
+		<property name="uploadfile-maxsize" value="10"/> 
+		
+		<!--====================== 数据库集群配置 ===================-->
+		<!--=========================================================-->
+		<cluster state="off" />
+
+		<!--====================== 广播配置 =====================================-->
+		<!-- 广播地址                                                            -->
+		<!-- 在局域网中,注意本参数配置不要同其他应用的相关参数配置冲突,以免相互  -->
+		<!-- 影响                                                                -->
+		 <!--=====================================================================-->
+		<multicast state="off"
+			multicastadress="237.0.0.1"
+			multicastport="6789"
+			packetlen="10240"
+			strtimeout="30"/>
+		
+
+		<!--==================== 代码表缓存配置 =======================-->
+		<!--===========================================================-->
+		<codecache state="on"
+			use-memory-cache="true"
+			update-cyc="1000"
+			catalog-table="t_xt_hcbxx"/>
+
+		<!--===================== 定时任务管理 ========================-->
+		<!--===========================================================-->
+		<scheduler state="off"/>
+		
+		<!--===================== 邮件服务器配置 =====================-->
+		<!--===========================================================-->
+		<mail mail-smtp-host="127.0.0.1"
+			  mail-smtp-port="110"
+			  from="aa@bb.cc"/>
+
+		<!--===================== EJB访问配置 ========================-->
+		<!--==========================================================-->
+		<ejb jndi="ServiceFacadeBean"
+			factory="weblogic.jndi.WLInitialContextFactory"
+			url="t3://127.0.0.1:8001"/>
+			
+
+			
+</bootstrap-configuration>

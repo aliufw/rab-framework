@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-configuration>
+	<or-mappings session-factory="persistence.ds002">
+		<!-- 系统参数 -->
+		<mapping class="com.rab.sys.sysmanager.base.model.TSysParaDataPO" />
+		<!-- end 系统参数 -->
+		<!-- 基础数据管理 -->
+		<mapping class="com.rab.sys.sysmanager.base.model.TAcctYearPeriodPO" />
+		<mapping class="com.rab.sys.sysmanager.base.model.TAcctYearPO" />
+		<mapping class="com.rab.sys.sysmanager.base.model.TSysCopyPO" />
+		<!-- end 基础数据管理  -->
+		<!-- 用户及权限管理 -->
+		<mapping class="com.rab.sys.sysmanager.authority.model.TSysModPermPO" />
+		<mapping class="com.rab.sys.sysmanager.authority.model.TSysGroupPermPO" />
+		<mapping class="com.rab.sys.sysmanager.authority.model.TSysUserPermPO" />
+		<mapping class="com.rab.sys.sysmanager.authority.model.TSysTablePO" />
+		<mapping class="com.rab.sys.sysmanager.authority.model.TSysUserCodePO" />
+		<mapping class="com.rab.sys.sysmanager.authority.model.TSysGroupCodePO" />
+		<!-- end 用户及权限管理 -->
+		<!-- 科目总帐 -->
+		<mapping class="com.rab.sys.sysmanager.info.model.SysAcctSubjPO" />
+		<!-- 科目总帐 -->
+		<!-- 职员 -->
+		<mapping class="com.rab.sys.sysmanager.info.model.TSysEmpPO" />
+		<!-- 职员 --> 
+		<!-- 单位信息 -->
+		<mapping class="com.rab.sys.sysmanager.info.model.TSysCompanyPO" />
+		<!-- 单位信息 -->
+		<!-- 部门信息 -->
+		<mapping class="com.rab.sys.sysmanager.info.model.TSysDeptPO" />
+		<!-- 部门信息 -->
+		<!-- 用户信息 -->
+		<mapping class="com.rab.sys.sysmanager.authority.model.TSysUserPO"/>
+		<!-- 用户信息 -->
+		<!-- 用户组信息 -->
+		<mapping class="com.rab.sys.sysmanager.authority.model.TSysGroupPO"/>
+		<mapping class="com.rab.sys.sysmanager.authority.model.TSysUserGroupPO"/>
+		<!-- 用户组信息 -->
+		<!-- 管理员权限 -->
+		<mapping class="com.rab.sys.sysmanager.authority.model.TSysDbaCompPO" />
+		<!-- 管理员权限 -->
+		 
+    </or-mappings>
+</hibernate-configuration>
